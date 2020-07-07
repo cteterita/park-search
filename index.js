@@ -12,7 +12,7 @@ function fetchParks(stateString, maxResults) {
     fetch(`${searchURL}?${formatParams(params)}`)
         .then(response => response.json())
         .then(parsedResponse => displayResults(parsedResponse, maxResults))
-        .catch(e => $('.js-error-message').text(`Error: ${e}`));
+        .catch(e => $('.js-status-message').text(`${e}`));
 }
 
 function formatParams(params) {
@@ -22,14 +22,11 @@ function formatParams(params) {
   }
 
 function displayResults(responseJson, maxResults) {
-    $('#results-list').empty();
-    $('.results').addClass('hidden'); // Hide in case results aren't valid
+    $('.js-status-message').text(``);
 
     numResults = responseJson.data.length;
     if (numResults === 0) {
         throw 'No parks found.';
-    } else if (numResults > maxResults) { //This happens when maxResults is set to 0 or less
-        throw 'Enter a number of max results of at least 1.';
     }
 
     $('#results-heading').html(`${numResults} Parks Found`);
@@ -50,9 +47,21 @@ function displayResults(responseJson, maxResults) {
 }
 
 function listenToForm() {
-    $('form').submit(e => {
+    $('form').submit(e => {        
         e.preventDefault();
-        fetchParks($('#stateString').val(),$('#maxResults').val());
+
+        //Empty previous results
+        $('.js-status-message').text(`Searching...`);
+        $('#results-list').empty();
+        $('.results').addClass('hidden'); // Hide in case results aren't valid
+
+        //Validate maxResults
+        let maxResults = $('#maxResults').val();
+        if (maxResults < 1) {
+            $('.js-status-message').text(`Enter a number of results to return of at least 1.`);
+        } else {
+            fetchParks($('#stateString').val(),maxResults);
+        }
     });
 }
 

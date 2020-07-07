@@ -1,4 +1,5 @@
-// put your own value below!
+'use strict';
+
 const apiKey = '0f8uUcVFOmRJOXcehf8hLCg93YgWoNHv1lUJtzRZ'; 
 const searchURL = 'https://developer.nps.gov/api/v1/parks';
 
@@ -24,7 +25,7 @@ function formatParams(params) {
 function displayResults(responseJson, maxResults) {
     $('.js-status-message').text(``);
 
-    numResults = responseJson.data.length;
+    const numResults = responseJson.data.length;
     if (numResults === 0) {
         throw 'No parks found.';
     }

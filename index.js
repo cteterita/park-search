@@ -30,10 +30,9 @@ function displayResults(responseJson, maxResults) {
         throw 'Enter a number of max results of at least 1.';
     }
 
-    $('#results-heading').html(`${numResults} Parks Found`)
+    $('#results-heading').html(`${numResults} Parks Found`);
 
     responseJson.data.forEach(park => {
-        console.log(park);
         $('#results-list').append(`<li>
         <a href='${park.url}' target='_blank'>${park.fullName}</a>
         <p>${park.description}</p>

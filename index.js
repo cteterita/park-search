@@ -23,6 +23,8 @@ function formatParams(params) {
 
 function displayResults(responseJson, maxResults) {
     $('#results-list').empty();
+    $('.results').addClass('hidden'); // Hide in case results aren't valid
+
     numResults = responseJson.data.length;
     if (numResults === 0) {
         throw 'No parks found.';
@@ -38,8 +40,8 @@ function displayResults(responseJson, maxResults) {
         <p>${park.description}</p>
         <p>
             ${park.addresses[0].line1}<br>
-            ${park.addresses[0].line2} ${park.addresses[0].line2 ? '<br' : ''}
-            ${park.addresses[0].line3} ${park.addresses[0].line3 ? '<br' : ''}
+            ${park.addresses[0].line2} ${park.addresses[0].line2 ? '<br>' : ''}
+            ${park.addresses[0].line3} ${park.addresses[0].line3 ? '<br>' : ''}
             ${park.addresses[0].city}, ${park.addresses[0].stateCode}, ${park.addresses[0].postalCode}
         </p>
         </li>`);
